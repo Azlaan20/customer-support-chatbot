@@ -17,6 +17,7 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  perspective: 1000px; /* Added perspective for 3D effects */
 }
 
 /* Scrollbar Styles */
@@ -49,11 +50,15 @@ button {
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  backface-visibility: hidden;
 }
 
 button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) rotateX(15deg) rotateY(15deg);
   background-color: #4e54c8;
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.3);
 }
 
 /* Inputs */
@@ -64,12 +69,13 @@ input, textarea {
   background: rgba(255, 255, 255, 0.2);
   color: #fff;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
 input:focus, textarea:focus {
   outline: none;
   border-color: #764ba2;
+  transform: translateZ(10px);
 }
 
 /* Placeholder Text */
@@ -94,6 +100,13 @@ input:focus, textarea:focus {
   margin-bottom: 15px;
   word-wrap: break-word;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: transform 0.6s ease;
+}
+
+.chat-bubble:hover {
+  transform: rotateX(10deg) rotateY(-10deg) translateZ(15px);
 }
 
 .chat-bubble::before {
@@ -130,6 +143,12 @@ input:focus, textarea:focus {
 /* Avatar Styles */
 .avatar {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+.avatar:hover {
+  transform: rotateY(180deg);
 }
 
 /* Dialog Styles */
@@ -140,24 +159,45 @@ input:focus, textarea:focus {
   padding: 20px;
 }
 
-.MuiDialogTitle-root {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
+/* TextField and Input Styles */
+.MuiTextField-root,
+.MuiInputBase-root {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+  transform-style: preserve-3d;
+  transform: translateZ(5px);
 }
 
-.MuiDialogContent-root {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.MuiTextField-root:hover .MuiInputBase-root,
+.MuiInputBase-root:hover {
+  border-color: #764ba2;
+  transform: translateZ(15px);
 }
 
-/* Slider Styles */
-.MuiSlider-root {
-  color: #575fcf;
+.MuiTextField-root .MuiInputLabel-root,
+.MuiInputBase-root .MuiInputLabel-root {
+  color: rgba(255, 255, 255, 0.7);
 }
 
-.MuiSlider-thumb {
-  background-color: #764ba2;
+.MuiTextField-root .MuiInputLabel-root.Mui-focused,
+.MuiInputBase-root .MuiInputLabel-root.Mui-focused {
+  color: #fff;
+}
+
+/* Buttons */
+.MuiButton-root {
+  background: linear-gradient(135deg, #3f51b5, #1a237e);
+  color: #fff;
+  box-shadow: 0 8px 30px rgba(63, 81, 181, 0.5);
+  transition: transform 0.3s ease;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.MuiButton-root:hover {
+  transform: rotateX(20deg) rotateY(-20deg);
 }
 
 /* Animated Background */
@@ -184,4 +224,5 @@ input:focus, textarea:focus {
   background-size: cover;
   opacity: 0.5;
   animation: float 5s ease-in-out infinite;
+  transform-style: preserve-3d;
 }

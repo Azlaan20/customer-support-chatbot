@@ -13,7 +13,7 @@
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^5.16.7",
     "aws-sdk": "^2.1672.0",
-    "axios": "^1.7.3",
+    "axios": "^1.16.0",
     "firebase": "^10.12.5",
     "framer-motion": "^11.3.24",
     "lottie-react": "^2.4.0",

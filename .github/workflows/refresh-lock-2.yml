@@ -1,0 +1,34 @@
+name: Refresh package lock after runtime dependency repair
+
+on:
+  push:
+    branches: ["chatgpt/fix-next-eslint-alignment"]
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-lock:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: chatgpt/fix-next-eslint-alignment
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Refresh lockfile
+        run: npm install --package-lock-only --ignore-scripts
+      - name: Commit lockfile
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          if git diff --cached --quiet; then
+            echo "No lockfile changes"
+          else
+            git commit -m "chore: refresh lockfile for runtime dependencies"
+            git push origin HEAD:chatgpt/fix-next-eslint-alignment
+          fi
